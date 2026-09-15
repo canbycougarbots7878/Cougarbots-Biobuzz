@@ -17,7 +17,11 @@ public class BasicAuto extends LinearOpMode {
         Otos.calibrateImu();
         waitForStart();
         while (opModeIsActive()) {
-            drive_base.omniMove();
+            SparkFunOTOS.Pose2D pose = Otos.getPosition();
+            telemetry.addData("x",pose.x);
+            telemetry.addData("y",pose.y);
+            telemetry.addData("h",pose.h);
+            telemetry.update();
         }
     }
 }
