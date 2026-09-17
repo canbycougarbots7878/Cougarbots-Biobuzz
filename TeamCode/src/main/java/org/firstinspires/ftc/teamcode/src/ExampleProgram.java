@@ -25,7 +25,7 @@ public class ExampleProgram extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            drive_base.omniMoveController(gamepad1,0.4);
+
 
             if(gamepad1.dpad_up) {
                 lift.move(1);

@@ -14,7 +14,8 @@ public class SimpleDrive extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            drive_base.omniMoveController(gamepad1, 0.4);
+
+
         }
     }
 }
