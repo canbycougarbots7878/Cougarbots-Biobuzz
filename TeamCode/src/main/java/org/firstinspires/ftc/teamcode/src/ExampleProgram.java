@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.src;
 
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 //import math;
@@ -15,17 +14,16 @@ public class ExampleProgram extends LinearOpMode {
     DriveBase drive_base = null;
     Lift lift = null;
     Claw claw = null;
-    SparkFunOTOS otos = null;
+
     @Override
     public void runOpMode() {
         drive_base = new DriveBase(hardwareMap);
         lift = new Lift(hardwareMap);
         claw = new Claw(hardwareMap);
-        otos = hardwareMap.get(SparkFunOTOS.class, "otos");
 
         waitForStart();
         while (opModeIsActive()) {
-
+            drive_base.moveWithController(gamepad1,0.4);
 
             if(gamepad1.dpad_up) {
                 lift.move(1);
