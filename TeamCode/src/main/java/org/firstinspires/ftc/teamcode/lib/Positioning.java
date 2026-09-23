@@ -4,11 +4,17 @@ import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 public class Positioning {
     SparkFunOTOS otos = null;
 
     public Positioning(HardwareMap hardwareMap) {
         otos = hardwareMap.get(SparkFunOTOS.class, "otos");
+        otos.calibrateImu();
+        otos.setLinearUnit(DistanceUnit.CM);
+        otos.setAngularUnit(AngleUnit.RADIANS);
     }
 
     public SparkFunOTOS.Pose2D getPose() {
