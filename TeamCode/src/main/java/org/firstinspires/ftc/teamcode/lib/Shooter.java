@@ -10,7 +10,7 @@ public class Shooter {
         this.shooter_motor = hardwareMap.get(DcMotor.class, "shooter");
     }
 
-    public void shoot() { this.shooter_motor.setPower(1); }
+    public void shoot() { this.shooter_motor.setPower(-1); }
     public void stop() {
         this.shooter_motor.setPower(0);
     }
