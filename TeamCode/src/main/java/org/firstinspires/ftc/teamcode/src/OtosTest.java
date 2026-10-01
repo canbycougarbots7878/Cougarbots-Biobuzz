@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.src;
 
 
+import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
@@ -9,45 +10,35 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.concurrent.TimeUnit;
 import org.firstinspires.ftc.teamcode.lib.DriveBase;
+import org.firstinspires.ftc.teamcode.lib.Positioning;
 
 import java.util.concurrent.TimeUnit;
 //pnuemonoultramicroscopicsilicovolcanoconiosis
 
 @SuppressWarnings("unused")
-@Autonomous(name="Basic Auto", group="Basic")
-public class BasicAuto extends LinearOpMode {
+@Autonomous(name="OtosTest", group="Basic")
+public class OtosTest extends LinearOpMode {
     DriveBase drive_base = null;
+
     SparkFunOTOS Otos = null;
     @Override
     public void runOpMode() throws InterruptedException {
         drive_base = new DriveBase(hardwareMap);
         Otos = hardwareMap.get(SparkFunOTOS.class, "otos");
         Otos.calibrateImu();
+        Otos.resetTracking();
+
         waitForStart();
-        /*drive_base.drive(0.05);
-        drive_base.strafe(-0.35);
-        TimeUnit.SECONDS.sleep(2);
-        drive_base.stop();
-        drive_base.drive(-0.1);
-        TimeUnit.MILLISECONDS.sleep(500);
-        drive_base.stop();
-        */
-        drive_base.strafe(-0.35);
-
-
         while (opModeIsActive()) {
             SparkFunOTOS.Pose2D pose = Otos.getPosition();
-
             telemetry.addData("x",pose.x);
             telemetry.addData("y",pose.y);
             telemetry.addData("h",pose.h);
             telemetry.update();
             if (distance(pose.x, 0, pose.y, 0) < 1 ){
                 telemetry.addLine("at (0,0)");
+
             }
-          if (pose.x < -39.7981244655776) {
-              drive_base.stop();
-          }
 
         }
 
@@ -58,5 +49,8 @@ public class BasicAuto extends LinearOpMode {
         final double distance = sqrt(dx*dx + dy*dy);
 
         return distance;
+
+
+
     }
 }

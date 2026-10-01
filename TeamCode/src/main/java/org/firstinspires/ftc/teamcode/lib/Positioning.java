@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.lib;
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -21,4 +20,5 @@ public class Positioning {
         SparkFunOTOS.Pose2D pose = otos.getPosition();
         return pose;
     }
+
 }
