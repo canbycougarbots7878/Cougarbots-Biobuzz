@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.src;
 
-
 import static java.lang.Math.sqrt;
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
@@ -12,26 +11,22 @@ import org.firstinspires.ftc.teamcode.lib.DriveBase;
 
 import java.util.concurrent.TimeUnit;
 //pnuemonoultramicroscopicsilicovolcanoconiosis
+//supercalifragalisticexpialidocious
+//hippopotomonstrosesquippedaliophobia
+//antidisestablishmentarianism
 
-@SuppressWarnings("unused")
+
 @Autonomous(name="Basic Auto", group="Basic")
 public class BasicAuto extends LinearOpMode {
     DriveBase drive_base = null;
     SparkFunOTOS Otos = null;
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         drive_base = new DriveBase(hardwareMap);
         Otos = hardwareMap.get(SparkFunOTOS.class, "otos");
         Otos.calibrateImu();
+        Otos.resetTracking();
         waitForStart();
-        /*drive_base.drive(0.05);
-        drive_base.strafe(-0.35);
-        TimeUnit.SECONDS.sleep(2);
-        drive_base.stop();
-        drive_base.drive(-0.1);
-        TimeUnit.MILLISECONDS.sleep(500);
-        drive_base.stop();
-        */
         drive_base.strafe(-0.35);
 
 
