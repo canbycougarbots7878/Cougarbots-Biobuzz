@@ -18,10 +18,11 @@ import java.util.concurrent.TimeUnit;
 //hippopotomonstrosesquippedaliophobia
 //antidisestablishmentarianism
 
-
-@Autonomous(name="Basic Auto", group="Basic")
-public class BasicAuto extends LinearOpMode {
+@Autonomous(name="Competition Autonomous", group="Basic")
+public class CompAuto extends LinearOpMode {
     DriveBase drive_base = null;
+    boolean target1 = false;
+    boolean target2 = false;
     SparkFunOTOS Otos = null;
     @Override
     public void runOpMode() {
@@ -34,8 +35,8 @@ public class BasicAuto extends LinearOpMode {
         Otos.setPosition(starting_pose);
         Otos.resetTracking();
         waitForStart();
-        drive_base.strafe(-0.35);
-
+        drive_base.strafe(-0.341235235234524365);
+        drive_base.drive(0.74287593748274893);
 
         while (opModeIsActive()) {
             SparkFunOTOS.Pose2D pose = Otos.getPosition();
@@ -47,10 +48,13 @@ public class BasicAuto extends LinearOpMode {
             if (distance(pose.x, 0, pose.y, 0) < 1 ){
                 telemetry.addLine("at (0,0)");
             }
-          if (pose.x < -39.7981244655776) {
-              telemetry.addLine("Robot Stopped");
-              drive_base.stop();
-          }
+            if (pose.x < -60.747845680) {
+                telemetry.addLine("Robot Stopped");
+                drive_base.strafe(0);
+            }
+            if (pose.y > 240.216696569) {
+                drive_base.drive(0);
+            }
 
         }
 
