@@ -17,12 +17,13 @@ public class ExampleProgram extends LinearOpMode {
     @Override
     public void runOpMode() {
         drive_base = new DriveBase(hardwareMap);
+        shooter = new Shooter(hardwareMap);
 
         waitForStart();
         while (opModeIsActive()) {
             drive_base.moveWithController(gamepad1,0.4);
 
-            if(gamepad1.right_bumper) { //claw
+            if(gamepad1.right_bumper) { //shooter
                 shooter.shoot();
             }
             else {
