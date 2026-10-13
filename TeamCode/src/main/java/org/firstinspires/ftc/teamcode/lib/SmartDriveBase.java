@@ -6,6 +6,8 @@ import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+
 public class SmartDriveBase extends DriveBase {
     public Positioning positioning = null;
     SparkFunOTOS.Pose2D origin = null;
@@ -16,14 +18,13 @@ public class SmartDriveBase extends DriveBase {
         origin = positioning.getPose();
     }
 
-    public void smartDrive() {
-        double dir_x = sin(origin.h);
-        double dir_y = cos(origin.h);
-
-        SparkFunOTOS.Pose2D current = positioning.getPose();
-
-        double act_x = current.x - origin.x;
-        double act_y = current.y - origin.y;
+    public void globalMove(double forward, double right) {
+        YawPitchRollAngles angles = positioning.getOrientation();
+        double yaw = angles.getYaw();
+        double x = right * Math.cos(yaw) - forward * Math.sin(yaw);
+        double y = right * Math.sin(yaw) + forward * Math.cos(yaw);
+        drive(y);
+        strafe(x);
     }
 
     @Override
