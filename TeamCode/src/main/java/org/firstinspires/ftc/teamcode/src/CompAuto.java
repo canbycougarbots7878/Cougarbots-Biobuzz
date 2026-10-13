@@ -35,8 +35,8 @@ public class CompAuto extends LinearOpMode {
         Otos.setPosition(starting_pose);
         Otos.resetTracking();
         waitForStart();
-        drive_base.strafe(-0.341235235234524365);
-        drive_base.drive(0.74287593748274893);
+        drive_base.strafe(-0.241235235234524365);
+        drive_base.drive(0.44287593748274893);
 
         while (opModeIsActive()) {
             SparkFunOTOS.Pose2D pose = Otos.getPosition();
@@ -48,21 +48,24 @@ public class CompAuto extends LinearOpMode {
             if (distance(pose.x, 0, pose.y, 0) < 1 ){
                 telemetry.addLine("at (0,0)");
             }
-            if (pose.x < -60.747845680) {
+            if (pose.x < -80) {
                 telemetry.addLine("Robot Stopped");
                 drive_base.strafe(0);
             }
-            if (pose.y > 240.216696569) {
+            if (pose.y > 235)  {
                 drive_base.drive(0);
             }
+            if (distance(pose.x, -60.748, pose.y, 240.217) < 2) {
+               drive_base.strafe(-0.5);
 
+            }
         }
 
     }
     public double distance(double x1, double x2, double y1, double y2) {
         double dx = x2 - x1;
         double dy = y2 - y1;
-        final double distance = sqrt(dx*dx + dy*dy);
+        double distance = sqrt(dx*dx + dy*dy);
 
         return distance;
     }
