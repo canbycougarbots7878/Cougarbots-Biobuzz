@@ -15,7 +15,7 @@ public class TestDrive extends LinearOpMode {
     SmartDriveBase drive_base = null;
     DcMotor main_spinner = null;
     CRServo servo = null;
-    double SPINNER_VELOCITY = 1150;
+    double SPINNER_VELOCITY = 350;
     @Override
     public void runOpMode() {
         drive_base = new SmartDriveBase(hardwareMap);
@@ -30,16 +30,16 @@ public class TestDrive extends LinearOpMode {
             double clockwise = - gamepad1.right_stick_x;
 
             drive_base.globalMove(forward,right);
-            if (gamepad1.rightBumperWasPressed()) {
+            if (gamepad1.right_bumper) {
                 setSpinnerPower(SPINNER_VELOCITY);
             }else {
-                stopSpinners();
+            stopSpinners();
             }
-            if (gamepad1.xWasPressed()) {
-                servo.setPower(.5);
+            if (gamepad1.x) {
+                servo.setPower(0.75);
             }else{
                 servo.setPower(0);
-            }
+        }
         }
 
     }
