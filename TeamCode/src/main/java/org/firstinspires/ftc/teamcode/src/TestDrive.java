@@ -33,13 +33,13 @@ public class TestDrive extends LinearOpMode {
             if (gamepad1.right_bumper) {
                 setSpinnerPower(SPINNER_VELOCITY);
             }else {
-            stopSpinners();
+                stopSpinners();
             }
             if (gamepad1.x) {
                 servo.setPower(0.75);
             }else{
                 servo.setPower(0);
-        }
+            }
         }
 
     }
