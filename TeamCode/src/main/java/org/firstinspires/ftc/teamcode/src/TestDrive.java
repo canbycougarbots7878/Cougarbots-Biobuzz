@@ -22,7 +22,6 @@ public class TestDrive extends LinearOpMode {
         main_spinner = hardwareMap.get(DcMotor.class, "mainspinner");
         servo = hardwareMap.get(CRServo.class, "intake");
 
-
         waitForStart();
         while (opModeIsActive()) {
             double forward = - gamepad1.left_stick_y;

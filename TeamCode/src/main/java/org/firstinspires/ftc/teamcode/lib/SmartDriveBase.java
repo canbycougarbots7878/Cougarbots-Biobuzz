@@ -10,12 +10,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 public class SmartDriveBase extends DriveBase {
     public Positioning positioning = null;
-    SparkFunOTOS.Pose2D origin = null;
+    SparkFunOTOS.Pose2D target = null;
 
     public SmartDriveBase(HardwareMap hardwareMap) {
         super(hardwareMap);
         positioning = new Positioning(hardwareMap);
-        origin = positioning.getPose();
+        target = positioning.getPose();
     }
 
     public void globalMove(double forward, double right) {
@@ -27,10 +27,24 @@ public class SmartDriveBase extends DriveBase {
         strafe(x);
     }
 
+    public SparkFunOTOS.Pose2D getTarget() {
+        return this.target;
+    }
+    public void setTarget(SparkFunOTOS.Pose2D new_target) {
+        this.target = new_target;
+    }
+
+    public void driveToTarget() {
+        SparkFunOTOS.Pose2D pose = positioning.getPose();
+        double dx = target.x - pose.x;
+        double dy = target.y - pose.y;
+        globalMove(dy,dx);
+    }
+
     @Override
     public void stop() {
         super.stop();
-        origin = positioning.getPose();
+        target = positioning.getPose();
     }
 
     public void pointTowards(double heading) {
