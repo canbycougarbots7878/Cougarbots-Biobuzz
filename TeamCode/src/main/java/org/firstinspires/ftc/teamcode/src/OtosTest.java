@@ -9,6 +9,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.concurrent.TimeUnit;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.lib.DriveBase;
 import org.firstinspires.ftc.teamcode.lib.Positioning;
 
@@ -26,6 +29,10 @@ public class OtosTest extends LinearOpMode {
         drive_base = new DriveBase(hardwareMap);
         Otos = hardwareMap.get(SparkFunOTOS.class, "otos");
         Otos.calibrateImu();
+        Otos.setAngularUnit(AngleUnit.DEGREES);
+        Otos.setLinearUnit(DistanceUnit.CM);
+        SparkFunOTOS.Pose2D starting_pose = new SparkFunOTOS.Pose2D(0,0, 90);
+        Otos.setPosition(starting_pose);
         Otos.resetTracking();
 
         waitForStart();

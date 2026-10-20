@@ -1,0 +1,71 @@
+package org.firstinspires.ftc.teamcode.src;
+
+
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import java.util.concurrent.TimeUnit;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.lib.DriveBase;
+import org.firstinspires.ftc.teamcode.lib.Positioning;
+
+import java.util.concurrent.TimeUnit;
+//pnuemonoultramicroscopicsilicovolcanoconiosis
+
+//target position: (-20, 50)
+@SuppressWarnings("unused")
+@Autonomous(name="ArcherAuto", group="Basic")
+public class ArcherAuto extends LinearOpMode {
+    DriveBase drive_base = null;
+
+    SparkFunOTOS Otos = null;
+    @Override
+    public void runOpMode() throws InterruptedException {
+        drive_base = new DriveBase(hardwareMap);
+        Otos = hardwareMap.get(SparkFunOTOS.class, "otos");
+        Otos.calibrateImu();
+        Otos.setAngularUnit(AngleUnit.DEGREES);
+        Otos.setLinearUnit(DistanceUnit.CM);
+        SparkFunOTOS.Pose2D starting_pose = new SparkFunOTOS.Pose2D(0,0, 90);
+        Otos.setPosition(starting_pose);
+        Otos.resetTracking();
+
+        waitForStart();
+        drive_base.move(0.4,0,0);
+        while (opModeIsActive()) {
+            SparkFunOTOS.Pose2D pose = Otos.getPosition();
+            telemetry.addData("x",pose.x);
+            telemetry.addData("y",pose.y);
+            telemetry.addData("h",pose.h);
+            telemetry.update();
+            if (distance(pose.x, 0, pose.y, 0) < 1 ){
+                telemetry.addLine("at (0,0)");
+
+            }
+            if (pose.y > 50 && pose.x < 10 && pose.x > -10){
+                drive_base.stop();
+                drive_base.strafe(-0.4);
+            }
+            if (pose.x < -20){
+                drive_base.stop();
+            }
+        }
+
+    }
+    public double distance(double x1, double x2, double y1, double y2) {
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+        final double distance = sqrt(dx*dx + dy*dy);
+
+        return distance;
+
+
+
+    }
+}
