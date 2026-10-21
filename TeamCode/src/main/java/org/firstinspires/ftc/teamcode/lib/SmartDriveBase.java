@@ -3,9 +3,11 @@ package org.firstinspires.ftc.teamcode.lib;
 import static java.lang.Math.*;
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 public class SmartDriveBase extends DriveBase {
@@ -19,10 +21,10 @@ public class SmartDriveBase extends DriveBase {
     }
 
     public void globalMove(double forward, double right) {
-        YawPitchRollAngles angles = positioning.getOrientation();
-        double yaw = angles.getYaw();
-        double x = right * Math.cos(yaw) - forward * Math.sin(yaw);
-        double y = right * Math.sin(yaw) + forward * Math.cos(yaw);
+        SparkFunOTOS.Pose2D pose = positioning.getPose();
+        double yaw = pose.h;
+        double x = right * cos(yaw) + forward * sin(yaw);
+        double y = forward * cos(yaw) - right * sin(yaw);
         drive(y);
         strafe(x);
     }
@@ -38,7 +40,9 @@ public class SmartDriveBase extends DriveBase {
         SparkFunOTOS.Pose2D pose = positioning.getPose();
         double dx = target.x - pose.x;
         double dy = target.y - pose.y;
-        globalMove(dy,dx);
+        double m = sqrt(dx*dx+dy*dy);
+        dx /= m;
+        dy /= m;
     }
 
     @Override
@@ -52,5 +56,13 @@ public class SmartDriveBase extends DriveBase {
         double difference = RMath.angleDifference(heading,pose.h);
         double power = - difference * 0.5;
         turn(power);
+    }
+
+    public void globalMoveWithController(Gamepad gamepad, double speed_mod) {
+        double forward = - gamepad.left_stick_y * speed_mod;
+        double right = gamepad.left_stick_x * speed_mod;
+        double clockwise = - gamepad.right_stick_x * speed_mod;
+        globalMove(forward,right);
+        turn(clockwise);
     }
 }
