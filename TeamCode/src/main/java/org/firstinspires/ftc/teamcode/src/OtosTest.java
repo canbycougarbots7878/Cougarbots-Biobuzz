@@ -16,8 +16,6 @@ import org.firstinspires.ftc.teamcode.lib.DriveBase;
 import org.firstinspires.ftc.teamcode.lib.Positioning;
 
 import java.util.concurrent.TimeUnit;
-//pnuemonoultramicroscopicsilicovolcanoconiosis
-
 @SuppressWarnings("unused")
 @Autonomous(name="OtosTest", group="Basic")
 public class OtosTest extends LinearOpMode {
@@ -26,6 +24,7 @@ public class OtosTest extends LinearOpMode {
     SparkFunOTOS Otos = null;
     @Override
     public void runOpMode() throws InterruptedException {
+    // ---------------------------Setup--------------------------------------\\
         drive_base = new DriveBase(hardwareMap);
         Otos = hardwareMap.get(SparkFunOTOS.class, "otos");
         Otos.calibrateImu();
@@ -36,7 +35,9 @@ public class OtosTest extends LinearOpMode {
         Otos.resetTracking();
 
         waitForStart();
+
         while (opModeIsActive()) {
+    // ----------------------OTOS Position Tracking--------------------------\\
             SparkFunOTOS.Pose2D pose = Otos.getPosition();
             telemetry.addData("x",pose.x);
             telemetry.addData("y",pose.y);
@@ -50,6 +51,7 @@ public class OtosTest extends LinearOpMode {
         }
 
     }
+    //------------------------------Distance Formula-------------------------\\
     public double distance(double x1, double x2, double y1, double y2) {
         double dx = x2 - x1;
         double dy = y2 - y1;
@@ -60,4 +62,5 @@ public class OtosTest extends LinearOpMode {
 
 
     }
+
 }

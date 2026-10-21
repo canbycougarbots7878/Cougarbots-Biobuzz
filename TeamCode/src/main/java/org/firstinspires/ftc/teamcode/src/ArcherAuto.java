@@ -16,9 +16,13 @@ import org.firstinspires.ftc.teamcode.lib.DriveBase;
 import org.firstinspires.ftc.teamcode.lib.Positioning;
 
 import java.util.concurrent.TimeUnit;
-//pnuemonoultramicroscopicsilicovolcanoconiosis
+/*  GOALS -
+       1. Reach target position: (-20, 50)
+       2. Check and print something if target was reached
+       3. Automatic drift correction program
+       4. Add comments to improve readability + be able to explain program to someone else
 
-//target position: (-20, 50)
+*/
 @SuppressWarnings("unused")
 @Autonomous(name="ArcherAuto", group="Basic")
 public class ArcherAuto extends LinearOpMode {
@@ -27,6 +31,7 @@ public class ArcherAuto extends LinearOpMode {
     SparkFunOTOS Otos = null;
     @Override
     public void runOpMode() throws InterruptedException {
+
         drive_base = new DriveBase(hardwareMap);
         Otos = hardwareMap.get(SparkFunOTOS.class, "otos");
         Otos.calibrateImu();
@@ -37,7 +42,9 @@ public class ArcherAuto extends LinearOpMode {
         Otos.resetTracking();
 
         waitForStart();
-        drive_base.move(0.4,0,0);
+
+        drive_base.drive(0.4);
+
         while (opModeIsActive()) {
             SparkFunOTOS.Pose2D pose = Otos.getPosition();
             telemetry.addData("x",pose.x);
@@ -48,6 +55,8 @@ public class ArcherAuto extends LinearOpMode {
                 telemetry.addLine("at (0,0)");
 
             }
+
+
             if (pose.y > 50 && pose.x < 10 && pose.x > -10){
                 drive_base.stop();
                 drive_base.strafe(-0.4);
