@@ -16,6 +16,7 @@ public class Positioning {
 
     public Positioning(HardwareMap hardwareMap) {
         otos = hardwareMap.get(SparkFunOTOS.class, "otos");
+        otos.resetTracking();
         otos.calibrateImu();
         otos.setLinearUnit(DistanceUnit.CM);
         otos.setAngularUnit(AngleUnit.RADIANS);
@@ -36,6 +37,13 @@ public class Positioning {
 
     public YawPitchRollAngles getOrientation() {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        return orientation;
+        YawPitchRollAngles orientation_radians = new YawPitchRollAngles(
+                AngleUnit.RADIANS,
+                orientation.getYaw(AngleUnit.RADIANS),
+                orientation.getPitch(AngleUnit.RADIANS),
+                orientation.getRoll(AngleUnit.RADIANS),
+                orientation.getAcquisitionTime()
+        );
+        return orientation_radians;
     }
 }
