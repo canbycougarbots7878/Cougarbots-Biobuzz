@@ -7,13 +7,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 /* Unused Imports (For now)
 import com.qualcomm.robotcore.util.ElapsedTime;
+ */
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeUnit;
-*/
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.lib.DriveBase;
 
+//archer is better
 
 
 //pnuemonoultramicroscopicsilicovolcanoconiosis
@@ -25,10 +26,11 @@ import org.firstinspires.ftc.teamcode.lib.DriveBase;
 public class CompAuto extends LinearOpMode {
     DriveBase drive_base = null;
     boolean target1 = false;
+    int step = 0;
     boolean target2 = false;
     SparkFunOTOS Otos = null;
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
     //---------------------------------Setup------------------------------------------------------\\
         drive_base = new DriveBase(hardwareMap);
         Otos = hardwareMap.get(SparkFunOTOS.class, "otos");
@@ -41,9 +43,7 @@ public class CompAuto extends LinearOpMode {
         Otos.resetTracking();
 
         waitForStart();
-        //Begin Moving
-        drive_base.strafe(-0.241235235234524365);
-        drive_base.drive(0.44287593748274893);
+        drive_base.strafe(0.4);
 
         while (opModeIsActive()) {
         //---------------Position Tracking--------------------------------------------------------//
@@ -52,19 +52,30 @@ public class CompAuto extends LinearOpMode {
             telemetry.addData("y",pose.y);
             telemetry.addData("h", pose.h);
             telemetry.update();
-            if (distance(pose.x, 0, pose.y, 0) < 1 ){
-                telemetry.addLine("at (0,0)");
-            }
-            if (pose.x < -80) { //Target x value
-                telemetry.addLine("Robot Stopped");
-                drive_base.strafe(0);
-            }
-            if (pose.y > 235)  { //Target Y value
-                drive_base.drive(0);
-            }
-            if (distance(pose.x, -60.748, pose.y, 240.217) < 2) { //Touch wall
-               drive_base.strafe(-0.5);
 
+            if (pose.x > 28 && step == 0){
+                drive_base.stop();
+                TimeUnit.SECONDS.sleep(5);
+                //shoot code goes here
+                step = 1;
+                drive_base.strafe(-0.4);
+            }
+            if (pose.x < -28 && step== 1){
+                drive_base.stop();
+                step = 2;
+                drive_base.drive(0.4);
+            }
+            if (pose.y > 268.1 && step == 2){
+                drive_base.stop();
+                step = 3;
+                drive_base.strafe(-0.4);
+            }
+            if (pose.x < -81 && step == 3){
+                drive_base.stop();
+                step = 4;
+            }
+            if (distance(-81, pose.x, 272, pose.y)< 10){
+                telemetry.addLine("At End Archer is better");
             }
         }
 

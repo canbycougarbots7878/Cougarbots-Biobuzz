@@ -6,7 +6,7 @@ import static java.lang.Math.sqrt;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
+import java.util.concurrent.TimeUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.lib.DriveBase;
@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.lib.DriveBase;
 @Autonomous(name="Archer&&DanielAuto", group="Basic")
 public class ArcherDanielAuto extends LinearOpMode {
     DriveBase drive_base = null;
-    boolean StepOneDone = false;
+    int step = 0;
     SparkFunOTOS Otos = null;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -35,7 +35,7 @@ public class ArcherDanielAuto extends LinearOpMode {
 
         waitForStart();
 
-        drive_base.drive(0.4); //makes robot move forward
+        drive_base.drive(0.55); //makes robot move forward
 
         while (opModeIsActive()) {
             //gets the position of robot and prints it
@@ -45,17 +45,18 @@ public class ArcherDanielAuto extends LinearOpMode {
             telemetry.addData("h",pose.h);
             telemetry.update();
 
-            if (pose.y > 33 && pose.x < 2 && pose.x > -2 && !StepOneDone){ //when the robot reaches target y then checks if the x hasn't changed a significant amount then it stops and is strafes left
+            if (pose.y > 33 && pose.x < 2 && pose.x > -2 && step == 0){ //when the robot reaches target y then checks if the x hasn't changed a significant amount then it stops and is strafes left
                 drive_base.stop();
-                drive_base.strafe(-0.4);
-                StepOneDone = true;
+                drive_base.strafe(-0.55);
+                step = 1;
 
             }
-            if (pose.x < -80){ //when robot reaches target x then it stops
+            if (pose.x < -80 && step == 1){ //when robot reaches target x then it stops
                 drive_base.stop();
-                drive_base.strafe(0.4);
-                //Add wait and shoot code here
-
+                step = 2;
+                TimeUnit.SECONDS.sleep(5);
+                //Add shoot code here
+                drive_base.strafe(0.55);
 
             }
             if (pose.x > 28) { //when robot reaches target x then it stops
@@ -73,9 +74,10 @@ public class ArcherDanielAuto extends LinearOpMode {
     public double distance(double x1, double x2, double y1, double y2) {
         double dx = x2 - x1;
         double dy = y2 - y1;
-        final double distance = sqrt(dx*dx + dy*dy);
-
-        return distance;
+        return sqrt(dx*dx + dy*dy);
+        /* AKA: distance  = sqrt(dx*dx + dy*dy);
+              return distance
+        */
 
 
 
