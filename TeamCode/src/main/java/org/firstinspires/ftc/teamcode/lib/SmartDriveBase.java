@@ -35,14 +35,33 @@ public class SmartDriveBase extends DriveBase {
     public void setTarget(SparkFunOTOS.Pose2D new_target) {
         this.target = new_target;
     }
+    public void setTarget(double x, double y) {
+        this.target.x = x;
+        this.target.y = y;
+    }
+    public void setTarget(double x, double y, double h) {
+        this.target.x = x;
+        this.target.y = y;
+        this.target.h = h;
+    }
 
     public void driveToTarget() {
         SparkFunOTOS.Pose2D pose = positioning.getPose();
-        double dx = target.x - pose.x;
-        double dy = target.y - pose.y;
-        double m = sqrt(dx*dx+dy*dy);
-        dx /= m;
-        dy /= m;
+
+        double direction_x = target.x - pose.x;
+        double direction_y = target.y - pose.y;
+        double distance = Math.hypot(direction_x,direction_y);
+        direction_x /= distance;
+        direction_y /= distance;
+
+        direction_x *= 0.4 * min(distance * 0.1,1.0);
+        direction_y *= 0.4 * min(distance * 0.1,1.0);
+
+        globalMove(direction_y,direction_x);
+    }
+    public double distanceToTarget() {
+        SparkFunOTOS.Pose2D pose = positioning.getPose();
+        return Math.hypot(pose.x-target.x,pose.y-target.y);
     }
 
     @Override
@@ -58,7 +77,8 @@ public class SmartDriveBase extends DriveBase {
         turn(power);
     }
 
-    public void globalMoveWithController(Gamepad gamepad, double speed_mod) {
+    public void globalMoveWithController(Gamepad gamepad) {
+        double speed_mod = (gamepad.right_bumper ? 1.0 : 0.6);
         double forward = - gamepad.left_stick_y * speed_mod;
         double right = gamepad.left_stick_x * speed_mod;
         double clockwise = - gamepad.right_stick_x * speed_mod;
