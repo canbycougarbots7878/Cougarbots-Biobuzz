@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.lib.DriveBase;
 
 */
 @SuppressWarnings("unused")
-@Autonomous(name="Archer&&DanielAuto", group="Basic")
+@Autonomous(name="Secondary Competition Auto", group="Basic")
 public class ArcherDanielAuto extends LinearOpMode {
     DriveBase drive_base = null;
     int step = 0;

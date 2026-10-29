@@ -65,7 +65,7 @@ public class CompAuto extends LinearOpMode {
                 step = 2;
                 drive_base.drive(0.4);
             }
-            if (pose.y > 268.1 && step == 2){
+            if (pose.y > 266.1 && step == 2){
                 drive_base.stop();
                 step = 3;
                 drive_base.strafe(-0.4);
