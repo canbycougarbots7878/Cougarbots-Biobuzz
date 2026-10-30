@@ -47,7 +47,7 @@ public class BasicAuto extends LinearOpMode {
             if (distance(pose.x, 0, pose.y, 0) < 1 ){
                 telemetry.addLine("at (0,0)");
             }
-          if (pose.x < -39.7981244655776) {
+          if (pose.x < -91.6181244655776) {
               telemetry.addLine("Robot Stopped");
               drive_base.stop();
           }

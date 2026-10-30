@@ -22,7 +22,7 @@ public class BasicDrive extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             if(global) {
-                drive_base.globalMoveWithController(gamepad1,0.4);
+                drive_base.globalMoveWithController(gamepad1);
             }
             else {
                 drive_base.moveWithController(gamepad1,0.4);

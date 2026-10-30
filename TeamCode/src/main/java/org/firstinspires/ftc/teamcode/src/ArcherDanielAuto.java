@@ -11,12 +11,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.lib.DriveBase;
 
-/*  GOALS -
-       1. Reach target position: (-20, 50)   yes
-       2. Check and print something if target was reached    yes
-       3. Add comments to improve readability + be able to explain program to someone else   yes
-
-*/
 @SuppressWarnings("unused")
 @Autonomous(name="Secondary Competition Auto", group="Basic")
 public class ArcherDanielAuto extends LinearOpMode {
@@ -45,13 +39,13 @@ public class ArcherDanielAuto extends LinearOpMode {
             telemetry.addData("h",pose.h);
             telemetry.update();
 
-            if (pose.y > 33 && pose.x < 2 && pose.x > -2 && step == 0){ //when the robot reaches target y then checks if the x hasn't changed a significant amount then it stops and is strafes left
+            if (pose.y > 28 && pose.x < 2 && pose.x > -2 && step == 0){ //when the robot reaches target y then checks if the x hasn't changed a significant amount then it stops and is strafes left
                 drive_base.stop();
                 drive_base.strafe(-0.55);
                 step = 1;
 
             }
-            if (pose.x < -80 && step == 1){ //when robot reaches target x then it stops
+            if (pose.x < -75 && step == 1){ //when robot reaches target x then it stops
                 drive_base.stop();
                 step = 2;
                 TimeUnit.SECONDS.sleep(5);
@@ -59,10 +53,10 @@ public class ArcherDanielAuto extends LinearOpMode {
                 drive_base.strafe(0.55);
 
             }
-            if (pose.x > 28) { //when robot reaches target x then it stops
+            if (pose.x > 24) { //when robot reaches target x then it stops
                 drive_base.stop();
             }
-            if (distance(pose.x, 34, pose.y, 37) < 3 ){ //if robot is close to -20,50 then it says "At Destination"
+            if (distance(pose.x, 30, pose.y, 33) < 3 ){ //if robot is close to 30,33 then it says "At Destination"
                 telemetry.addLine("At finish");
 
             }
