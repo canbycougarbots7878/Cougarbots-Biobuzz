@@ -75,7 +75,7 @@ public class CompAuto extends LinearOpMode {
                 step = 4;
             }
             if (distance(-81, pose.x, 272, pose.y)< 10){
-                telemetry.addLine("At End Archer is better");
+                telemetry.addLine("At End Daniel is better");
             }
         }
 
