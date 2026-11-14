@@ -2,17 +2,18 @@ package org.firstinspires.ftc.teamcode.src;
 import java.util.ArrayList;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import java.util.List;
 import java.util.Random;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 @SuppressWarnings("unused")
-@TeleOp(name="rock, paper, scissors (don't use at competitions", group="Basic")
+@TeleOp(name="rock, paper, scissors (use at competitions)", group="Basic")
 public class RockPaperScissors extends LinearOpMode {
 
     String player1 = "paper";
     String player2 = "scissors";
     int player1_wins = 0;
+    int player1_Guns = 0;
+    int player2_Guns = 0;
     int player2_wins = 0;
     int Ties = 0;
     ArrayList<String> randombuttons1 = new ArrayList<>();
@@ -70,6 +71,53 @@ public class RockPaperScissors extends LinearOpMode {
             if (gamepad1.aWasPressed()){//it doesn't see who won until A on player 1 was pressed
                 TimeUnit.SECONDS.sleep(1);//waits so it isn't spammed
 
+                if (random1.equals("gamepad1.x") && gamepad1.xWasPressed()){//random gun insta-win code
+                    player1 = "Gun";
+                }else if (random1.equals("gamepad1.y") && gamepad1.yWasPressed()){
+                    player1 = "Gun";
+                }else if (random1.equals("gamepad1.b") && gamepad1.bWasPressed()){
+                    player1 = "Gun";
+                }else if (random1.equals("gamepad1.dpaddown") && gamepad1.dpadRightWasPressed()){
+                    player1 = "Gun";
+                }else if (random1.equals("gamepad1.back") && gamepad1.backWasPressed()){
+                    player1 = "Gun";
+                } else if (random1.equals("gamepad1.leftbummper") && gamepad1.leftBumperWasPressed()) {
+                    player1 = "Gun";
+                } else if (random1.equals("gamepad1.rightbummper") && gamepad1.rightBumperWasPressed()) {
+                    player1 = "Gun";
+                }else if (random1.equals("gamepad1.lefttrigger") && gamepad1.leftTriggerWasPressed()) {
+                    player1 = "Gun";
+                }else if (random1.equals("gamepad1.righttrigger") && gamepad1.rightTriggerWasPressed()) {
+                    player1 = "Gun";
+                }else if (random1.equals("gamepad1.leftstickbutton") && gamepad1.leftStickButtonWasPressed()) {
+                    player1 = "Gun";
+                }else if (random1.equals("gamepad1.rightstickbutton") && gamepad1.rightStickButtonWasPressed()) {
+                    player1 = "Gun";
+                }
+                if (random2.equals("gamepad1.x") && gamepad1.xWasPressed()){//random gun insta-win code
+                    player2 = "Gun";
+                }else if (random2.equals("gamepad2.y") && gamepad2.yWasPressed()){
+                    player2 = "Gun";
+                }else if (random2.equals("gamepad2.b") && gamepad2.bWasPressed()){
+                    player2 = "Gun";
+                }else if (random2.equals("gamepad2.dpaddown") && gamepad2.dpadRightWasPressed()){
+                    player2 = "Gun";
+                }else if (random2.equals("gamepad2.back") && gamepad2.backWasPressed()){
+                    player2 = "Gun";
+                } else if (random2.equals("gamepad2.leftbummper") && gamepad2.leftBumperWasPressed()) {
+                    player2 = "Gun";
+                } else if (random2.equals("gamepad2.rightbummper") && gamepad2.rightBumperWasPressed()) {
+                    player2 = "Gun";
+                }else if (random2.equals("gamepad2.lefttrigger") && gamepad2.leftTriggerWasPressed()) {
+                    player2 = "Gun";
+                }else if (random2.equals("gamepad2.righttrigger") && gamepad2.rightTriggerWasPressed()) {
+                    player2 = "Gun";
+                }else if (random2.equals("gamepad2.leftstickbutton") && gamepad2.leftStickButtonWasPressed()) {
+                    player2 = "Gun";
+                }else if (random2.equals("gamepad2.rightstickbutton") && gamepad2.rightStickButtonWasPressed()) {
+                    player2 = "Gun";
+                }
+
                 if (Objects.equals(player1, player2)){//who won
                     telemetry.addLine("Tie");
                     Ties += 1;
@@ -82,38 +130,34 @@ public class RockPaperScissors extends LinearOpMode {
                 } else if (Objects.equals(player1, "scissors") && Objects.equals(player2, "paper")) {
                     telemetry.addLine("Player1 Wins!!");
                     player1_wins += 1;
-                }else {
+                }else if (Objects.equals(player1, "Gun")){
+                    telemetry.addLine("Player1 Wins!!");
+                    player1_wins += 1;
+                    player1_Guns += 1;
+                }else if (Objects.equals(player2, "Gun")){
+                    telemetry.addLine("Player2 Wins!!");
+                    player2_wins += 1;
+                    player2_wins += 1;
+                } else {
                     telemetry.addLine("player2 Wins!!");
                     player2_wins += 1;
                 }
 
-                if (random1.equals("gamepad1.x") && gamepad1.xWasPressed()){//random gun insta-win code
-                    telemetry.addLine("Player1 Wins!!");
-                    player1_wins += 1;
-                    player1 = "Gun";
-                }
-                if (random1.equals("gamepad1.y") && gamepad1.yWasPressed()){
-                    telemetry.addLine("Player1 Wins!!");
-                    player1_wins += 1;
-                    player1 = "Gun";
-                }
-                if (random1.equals("gamepad1.b") && gamepad1.bWasPressed()){
-                    telemetry.addLine("Player1 Wins!!");
-                    player1_wins += 1;
-                    player1 = "Gun";
-                }
-                if (random1.equals("gamepad1.dpaddown") && gamepad1.dpadRightWasPressed()){
-                    telemetry.addLine("Player1 Wins!!");
-                    player1_wins += 1;
-                    player1 = "Gun";
-                }
+
+                player1 = "paper";
+                player2 = "scissors";
 
                 //prints witch each player chose and how many wins each player has as well as ties
                 telemetry.addData("player1", player1);
                 telemetry.addData("player2", player2);
+                telemetry.addData("player1 Gun", randombuttons1);
+                telemetry.addData("player2 Gun", randombuttons2);
                 telemetry.addData("player1 Wins", player1_wins);
                 telemetry.addData("player2 Wins", player2_wins);
                 telemetry.addData("Ties", Ties);
+                telemetry.addData("player1 Guns", player1_Guns);
+                telemetry.addData("player2 Guns", player2_Guns);
+
 
             }
 
