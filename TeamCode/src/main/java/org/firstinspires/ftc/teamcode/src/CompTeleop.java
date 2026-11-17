@@ -31,7 +31,7 @@ public class CompTeleop extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             if(prm_mode) {
-                drive_base.globalMoveWithController(gamepad1);
+                drive_base.globalMoveWithController(gamepad1,true);
             }
             else {
                 drive_base.moveWithController(gamepad1,1.0);

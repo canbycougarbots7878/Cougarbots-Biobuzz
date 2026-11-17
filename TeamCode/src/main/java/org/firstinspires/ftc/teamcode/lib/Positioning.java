@@ -70,7 +70,6 @@ public class Positioning {
     }
 
     // IMU functions
-
     public YawPitchRollAngles getOrientation() {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         YawPitchRollAngles orientation_radians = new YawPitchRollAngles(

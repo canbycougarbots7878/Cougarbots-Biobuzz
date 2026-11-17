@@ -21,8 +21,8 @@ public class SmartDriveBase extends DriveBase {
     }
 
     public void globalMove(double forward, double right) {
-        SparkFunOTOS.Pose2D pose = positioning.getPose();
-        double yaw = pose.h;
+        YawPitchRollAngles angles = positioning.getOrientation();
+        double yaw = angles.getYaw();
         double x = right * cos(yaw) + forward * sin(yaw);
         double y = forward * cos(yaw) - right * sin(yaw);
         drive(y);
@@ -77,12 +77,12 @@ public class SmartDriveBase extends DriveBase {
         turn(power);
     }
 
-    public void globalMoveWithController(Gamepad gamepad) {
+    public void globalMoveWithController(Gamepad gamepad, boolean control_turn) {
         double speed_mod = (gamepad.right_bumper ? 1.0 : 0.6);
         double forward = - gamepad.left_stick_y * speed_mod;
         double right = gamepad.left_stick_x * speed_mod;
         double clockwise = - gamepad.right_stick_x * speed_mod;
         globalMove(forward,right);
-        turn(clockwise);
+        if(control_turn) turn(clockwise);
     }
 }

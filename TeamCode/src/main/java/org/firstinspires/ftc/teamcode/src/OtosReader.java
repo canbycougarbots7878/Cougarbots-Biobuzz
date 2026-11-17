@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.lib.DriveBase;
 import org.firstinspires.ftc.teamcode.lib.Positioning;
 
@@ -25,10 +26,14 @@ public class OtosReader extends LinearOpMode {
 
         while (opModeIsActive()) {
             SparkFunOTOS.Pose2D pose = positioning.getPose();
+            YawPitchRollAngles angles = positioning.getOrientation();
 
+            telemetry.addLine("----- OTOS -----");
             telemetry.addData("x",pose.x);
             telemetry.addData("y",pose.y);
             telemetry.addData("h", pose.h);
+            telemetry.addLine("----- IMU -----");
+            telemetry.addData("yaw",angles.getYaw());
             telemetry.update();
         }
     }

@@ -29,15 +29,17 @@ public class SmartDriveBaseTest extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            if(gamepad1.x) {
-                AprilTagClusterDetection scoring = drive_base.positioning.lookForAprilTagCluster("BLUE SCORING");
-                if(scoring != null) {
-                    double x = scoring.ftcPose.x;
-                    double bearing = scoring.ftcPose.bearing;
-                    drive_base.strafe(falloff(-x,10) * 0.6);
-                    drive_base.turn(falloff(-bearing,10) * 0.1);
-                }
+            AprilTagClusterDetection scoring = drive_base.positioning.lookForAprilTagCluster("BLUE SCORING");
+            if(scoring != null) {
+                double x = scoring.ftcPose.x;
+                double bearing = scoring.ftcPose.bearing;
+                //drive_base.strafe(falloff(-x,10) * 0.6);
+                drive_base.turn(falloff(bearing,45) * 0.6);
             }
+            else {
+                drive_base.turn(0.4);
+            }
+            drive_base.globalMoveWithController(gamepad1, false);
 
             drive_base.positioning.telemetryAprilTag(telemetry);
             telemetry.update();

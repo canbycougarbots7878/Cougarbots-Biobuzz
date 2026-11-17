@@ -25,7 +25,7 @@ public class AutoDrive extends LinearOpMode {
         while (opModeIsActive()) {
             drive_base.driveToTarget();
 
-            ;if (distance_to_target()<1 && !attarget1){
+            if (distance_to_target()<1 && !attarget1){
                 drive_base.setTarget(new SparkFunOTOS.Pose2D(0,0,0));
                 attarget1 = true;
             }
