@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.lib.DriveBase;
 import org.firstinspires.ftc.teamcode.lib.Positioning;
 import org.firstinspires.ftc.teamcode.lib.SmartDriveBase;
+import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,31 +29,23 @@ public class SmartDriveBaseTest extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            SparkFunOTOS.Pose2D pose = drive_base.positioning.getPose();
-            if(gamepad1.dpad_up) {
-                drive_base.setTarget(0,40);
+            if(gamepad1.x) {
+                AprilTagClusterDetection scoring = drive_base.positioning.lookForAprilTagCluster("BLUE SCORING");
+                if(scoring != null) {
+                    double x = scoring.ftcPose.x;
+                    double bearing = scoring.ftcPose.bearing;
+                    drive_base.strafe(falloff(-x,10) * 0.6);
+                    drive_base.turn(falloff(-bearing,10) * 0.1);
+                }
             }
-            else if(gamepad1.dpad_down) {
-                drive_base.setTarget(0,-40);
-            }
-            else if(gamepad1.dpad_right) {
-                drive_base.setTarget(40,0);
-            }
-            else if(gamepad1.dpad_left) {
-                drive_base.setTarget(-40,0);
-            }
-            else {
-                drive_base.setTarget(0,0);
-            }
-            drive_base.driveToTarget();
 
-            telemetry.addData("x",pose.x);
-            telemetry.addData("y",pose.y);
-            telemetry.addData("h", pose.h);
+            drive_base.positioning.telemetryAprilTag(telemetry);
             telemetry.update();
         }
     }
     public double falloff(double x, double t) {
-        return Math.min(1,Math.abs(x)/t);
+        double magnitude = Math.abs(x);
+        double direction = Math.signum(x);
+        return Math.min(1,magnitude/t) * direction;
     }
 }

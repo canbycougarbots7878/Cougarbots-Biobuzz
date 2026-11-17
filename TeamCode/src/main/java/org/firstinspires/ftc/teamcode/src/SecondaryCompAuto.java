@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.lib.DriveBase;
+import org.firstinspires.ftc.teamcode.lib.SmartDriveBase;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -24,7 +25,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
 @SuppressWarnings("unused")
 @Autonomous(name="Secondary Competition Auto", group="Basic")
 public class SecondaryCompAuto extends LinearOpMode {
-    DriveBase drive_base = null;
+    SmartDriveBase drive_base = null;
     int step = 0;
     SparkFunOTOS Otos = null;
 
@@ -37,12 +38,8 @@ public class SecondaryCompAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //sets up THE "OTOS" and drive base
         initAprilTag();
-        drive_base = new DriveBase(hardwareMap);
-        Otos = hardwareMap.get(SparkFunOTOS.class, "otos");
-        Otos.calibrateImu();
-        Otos.setAngularUnit(AngleUnit.DEGREES);
-        Otos.setLinearUnit(DistanceUnit.CM);
-        Otos.resetTracking();
+        drive_base = new SmartDriveBase(hardwareMap);
+
 
         waitForStart();
 
@@ -120,7 +117,7 @@ public class SecondaryCompAuto extends LinearOpMode {
         }
 
     }   // end method initAprilTag()
-    private void telemetryAprilTag() {
+    public void telemetryAprilTag() {
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());
